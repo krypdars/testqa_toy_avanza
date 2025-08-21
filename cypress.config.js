@@ -2,9 +2,10 @@ const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   e2e: {
-    // URL base de la aplicación
-    // baseUrl: 'http://localhost:8080', // Ajustar según tu configuración local
+    // URL base de la aplicación - usar variable de entorno o fallback
+    baseUrl: process.env.CYPRESS_baseUrl || 'http://portalqas:91',
     projectId: "f2kkta",
+    
     // Configuración de viewport
     viewportWidth: 1280,
     viewportHeight: 720,
@@ -37,22 +38,22 @@ module.exports = defineConfig({
       loginUrl: '/default.aspx',
       registroUrl: '/Registro_Mantenciones/Reg_Mantencion_01.aspx',
       
-      // Credenciales de prueba (cambiar por las reales)
-      testUser: 'admin_toyota',
-      testPassword: 'password123',
+      // Credenciales de prueba - usar variables de entorno
+      testUser: process.env.CYPRESS_testUser || 'USERPRUEBA2',
+      testPassword: process.env.CYPRESS_testPassword || '1234',
       
       // Configuración de base de datos
-      dbHost: 'localhost',
+      dbHost: process.env.CYPRESS_dbHost || 'localhost',
       dbName: 'RegistroMantenciones_Test',
       
-      // Datos de prueba válidos
-      validRut: '12345678-5',
-      validStock: 'ABC123',
+      // Datos de prueba válidos - usar variables de entorno
+      validRut: process.env.CYPRESS_validRut || '8249882-6',
+      validStock: process.env.CYPRESS_validStock || '0000906403',
       validClient: 'CLIENTE_PRUEBA',
       
       // Configuración de funcionalidades
       enableFileUpload: true,
-      enableSAPIntegration: false, // Para pruebas sin SAP real
+      enableSAPIntegration: process.env.CI ? false : true, // Desactivar SAP en CI
       
       // Timeouts específicos
       sapTimeout: 5000,
@@ -61,7 +62,17 @@ module.exports = defineConfig({
       // Configuración de organización
       clienteOrganizacion: 'TOYOTA_TEST',
       clienteSector: 'VENTAS',
-      canalDistribucion: 'DIRECTO'
+      canalDistribucion: 'DIRECTO',
+      
+      // Configuración específica para CI/CD
+      isCI: !!process.env.CI,
+      retries: process.env.CI ? 2 : 0
+    },
+    
+    // Configurar reintentos para CI
+    retries: {
+      runMode: 2,    // 2 reintentos en modo headless (CI)
+      openMode: 0    // 0 reintentos en modo interactivo
     },
     
     setupNodeEvents(on, config) {

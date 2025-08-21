@@ -1,0 +1,100 @@
+name: Cypress Tests - Registro Mantenciones Toyota
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # Permite ejecutar manualmente
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        browser: [chrome, firefox, edge]
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Instalar dependencias
+        run: npm ci
+      
+      - name: Verificar Cypress
+        run: npx cypress verify
+      
+      - name: Ejecutar pruebas Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          browser: ${{ matrix.browser }}
+          record: true
+          parallel: true
+          group: 'Tests-${{ matrix.browser }}'
+        env:
+          # Variables de entorno para las pruebas
+          CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASE_URL }}
+          CYPRESS_testUser: ${{ secrets.CYPRESS_TEST_USER }}
+          CYPRESS_testPassword: ${{ secrets.CYPRESS_TEST_PASSWORD }}
+          CYPRESS_validRut: ${{ secrets.CYPRESS_VALID_RUT }}
+          CYPRESS_validStock: ${{ secrets.CYPRESS_VALID_STOCK }}
+          CYPRESS_dbHost: ${{ secrets.CYPRESS_DB_HOST }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # GitHub token para paralelización
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Subir screenshots en caso de fallo
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.browser }}
+          path: cypress/screenshots
+          retention-days: 7
+      
+      - name: Subir videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos-${{ matrix.browser }}
+          path: cypress/videos
+          retention-days: 7
+      
+      - name: Generar reporte de resultados
+        if: always()
+        run: |
+          echo "## 📊 Resultados de Pruebas Cypress" >> $GITHUB_STEP_SUMMARY
+          echo "- **Navegador**: ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Estado**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Fecha**: $(date)" >> $GITHUB_STEP_SUMMARY
+
+  # Job para pruebas de smoke (críticas)
+  smoke-tests:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Instalar dependencias
+        run: npm ci
+      
+      - name: Ejecutar pruebas críticas
+        run: npm run test:smoke
+        env:
+          CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASE_URL }}
+          CYPRESS_testUser: ${{ secrets.CYPRESS_TEST_USER }}
+          CYPRESS_testPassword: ${{ secrets.CYPRESS_TEST_PASSWORD }}
