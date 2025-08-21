@@ -1,0 +1,218 @@
+{
+  "validClients": [
+    {
+      "rut": "12345678-5",
+      "dv": "5",
+      "nombre": "Juan Carlos",
+      "apellidoPaterno": "Pérez",
+      "apellidoMaterno": "González",
+      "email": "juan.perez@email.com",
+      "telefono": "+56912345678",
+      "direccion": "Av. Providencia 1234",
+      "ciudad": "Santiago",
+      "region": "Metropolitana",
+      "registered": true,
+      "description": "Cliente registrado activo"
+    },
+    {
+      "rut": "87654321-0",
+      "dv": "0",
+      "nombre": "María Elena",
+      "apellidoPaterno": "González",
+      "apellidoMaterno": "Silva",
+      "email": "maria.gonzalez@email.com",
+      "telefono": "+56987654321",
+      "direccion": "Las Condes 5678",
+      "ciudad": "Santiago",
+      "region": "Metropolitana",
+      "registered": true,
+      "description": "Cliente registrado con múltiples vehículos"
+    },
+    {
+      "rut": "11222333-4",
+      "dv": "4",
+      "nombre": "Carlos Alberto",
+      "apellidoPaterno": "Rodríguez",
+      "apellidoMaterno": "Morales",
+      "email": "carlos.rodriguez@email.com",
+      "telefono": "+56911222333",
+      "direccion": "Ñuñoa 9012",
+      "ciudad": "Santiago",
+      "region": "Metropolitana",
+      "registered": true,
+      "description": "Cliente con vehículo híbrido"
+    },
+    {
+      "rut": "44555666-7",
+      "dv": "7",
+      "nombre": "Ana Patricia",
+      "apellidoPaterno": "López",
+      "apellidoMaterno": "Herrera",
+      "email": "ana.lopez@email.com",
+      "telefono": "+56944555666",
+      "direccion": "Valparaíso 3456",
+      "ciudad": "Valparaíso",
+      "region": "Valparaíso",
+      "registered": true,
+      "description": "Cliente de región"
+    }
+  ],
+  "unregisteredClients": [
+    {
+      "rut": "99888777-6",
+      "dv": "6",
+      "nombre": "Pedro",
+      "apellidoPaterno": "Sánchez",
+      "apellidoMaterno": "Torres",
+      "email": "pedro.sanchez@email.com",
+      "telefono": "+56999888777",
+      "registered": false,
+      "description": "Cliente válido pero no registrado en sistema",
+      "registrationUrl": "../include/Ingresar_Clientes.aspx"
+    },
+    {
+      "rut": "77666555-4",
+      "dv": "4",
+      "nombre": "Laura",
+      "apellidoPaterno": "Martínez",
+      "apellidoMaterno": "Vega",
+      "email": "laura.martinez@email.com",
+      "telefono": "+56977666555",
+      "registered": false,
+      "description": "Cliente nuevo que necesita registro"
+    }
+  ],
+  "invalidClients": [
+    {
+      "rut": "11111111-1",
+      "dv": "1",
+      "error": "RUT con números repetidos",
+      "description": "RUT inválido por números repetidos"
+    },
+    {
+      "rut": "12345678-9",
+      "dv": "9",
+      "error": "Dígito verificador incorrecto",
+      "description": "RUT con dígito verificador incorrecto"
+    },
+    {
+      "rut": "123456789",
+      "dv": "",
+      "error": "Formato de RUT incorrecto",
+      "description": "RUT sin guión ni dígito verificador"
+    },
+    {
+      "rut": "12.345.678-5",
+      "dv": "5",
+      "error": "Formato de RUT con puntos",
+      "description": "RUT con formato de puntos no aceptado"
+    }
+  ],
+  "clientsForTesting": [
+    {
+      "rut": "10000000-K",
+      "dv": "K",
+      "nombre": "Test",
+      "apellidoPaterno": "Cliente",
+      "apellidoMaterno": "Uno",
+      "email": "test1@toyota.cl",
+      "telefono": "+56910000000",
+      "registered": true,
+      "testData": true,
+      "description": "Cliente de prueba 1"
+    },
+    {
+      "rut": "20000000-1",
+      "dv": "1",
+      "nombre": "Test",
+      "apellidoPaterno": "Cliente",
+      "apellidoMaterno": "Dos",
+      "email": "test2@toyota.cl",
+      "telefono": "+56920000000",
+      "registered": true,
+      "testData": true,
+      "description": "Cliente de prueba 2"
+    },
+    {
+      "rut": "30000000-2",
+      "dv": "2",
+      "nombre": "Test",
+      "apellidoPaterno": "Cliente",
+      "apellidoMaterno": "Tres",
+      "email": "test3@toyota.cl",
+      "telefono": "+56930000000",
+      "registered": false,
+      "testData": true,
+      "description": "Cliente de prueba no registrado"
+    }
+  ],
+  "rutValidationExamples": [
+    {
+      "rut": "12345678-5",
+      "valid": true,
+      "description": "RUT válido estándar"
+    },
+    {
+      "rut": "9876543-2",
+      "valid": true,
+      "description": "RUT válido de 7 dígitos"
+    },
+    {
+      "rut": "12345678-K",
+      "valid": true,
+      "description": "RUT válido con dígito K"
+    },
+    {
+      "rut": "11111111-1",
+      "valid": false,
+      "description": "RUT inválido - números repetidos"
+    },
+    {
+      "rut": "22222222-2",
+      "valid": false,
+      "description": "RUT inválido - números repetidos"
+    },
+    {
+      "rut": "12345678-9",
+      "valid": false,
+      "description": "RUT inválido - dígito verificador incorrecto"
+    },
+    {
+      "rut": "123456789",
+      "valid": false,
+      "description": "RUT inválido - formato sin guión"
+    },
+    {
+      "rut": "12.345.678-5",
+      "valid": false,
+      "description": "RUT inválido - formato con puntos"
+    },
+    {
+      "rut": "",
+      "valid": false,
+      "description": "RUT vacío"
+    },
+    {
+      "rut": "abc123-4",
+      "valid": false,
+      "description": "RUT inválido - contiene letras"
+    }
+  ],
+  "securityTestCases": [
+    {
+      "rut": "'; DROP TABLE Clientes; --",
+      "description": "Intento de inyección SQL",
+      "expectedBehavior": "Debe ser rechazado por validación de formato"
+    },
+    {
+      "rut": "<script>alert('XSS')</script>",
+      "description": "Intento de XSS",
+      "expectedBehavior": "Debe ser rechazado por validación de formato"
+    },
+    {
+      "rut": "12345678-5' OR '1'='1",
+      "description": "Intento de inyección SQL en dígito verificador",
+      "expectedBehavior": "Debe ser rechazado por validación"
+    }
+  ]
+}

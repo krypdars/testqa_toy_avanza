@@ -1,0 +1,102 @@
+{
+  "validUsers": [
+    {
+      "username": "admin_toyota",
+      "password": "password123",
+      "role": "admin",
+      "description": "Usuario administrador principal"
+    },
+    {
+      "username": "asesor_ventas",
+      "password": "asesor123",
+      "role": "asesor",
+      "description": "Asesor de ventas estándar"
+    },
+    {
+      "username": "supervisor_taller",
+      "password": "supervisor123",
+      "role": "supervisor",
+      "description": "Supervisor de taller"
+    }
+  ],
+  "invalidUsers": [
+    {
+      "username": "usuario_inexistente",
+      "password": "password_incorrecto",
+      "expectedError": "Credenciales inválidas",
+      "description": "Usuario que no existe en el sistema"
+    },
+    {
+      "username": "admin_toyota",
+      "password": "password_incorrecto",
+      "expectedError": "Contraseña incorrecta",
+      "description": "Usuario válido con contraseña incorrecta"
+    },
+    {
+      "username": "usuario_bloqueado",
+      "password": "password123",
+      "expectedError": "Usuario bloqueado",
+      "description": "Usuario bloqueado por intentos fallidos"
+    }
+  ],
+  "securityTestUsers": [
+    {
+      "username": "'; DROP TABLE Users; --",
+      "password": "password123",
+      "expectedError": "Formato de usuario inválido",
+      "description": "Intento de inyección SQL en username"
+    },
+    {
+      "username": "<script>alert('XSS')</script>",
+      "password": "password123",
+      "expectedError": "Formato de usuario inválido",
+      "description": "Intento de XSS en username"
+    },
+    {
+      "username": "admin_toyota",
+      "password": "'; DROP TABLE Users; --",
+      "expectedError": "Credenciales inválidas",
+      "description": "Intento de inyección SQL en password"
+    }
+  ],
+  "performanceTestUsers": [
+    {
+      "username": "perf_user_1",
+      "password": "perf123",
+      "role": "asesor",
+      "description": "Usuario para pruebas de rendimiento 1"
+    },
+    {
+      "username": "perf_user_2",
+      "password": "perf123",
+      "role": "asesor",
+      "description": "Usuario para pruebas de rendimiento 2"
+    },
+    {
+      "username": "perf_user_3",
+      "password": "perf123",
+      "role": "asesor",
+      "description": "Usuario para pruebas de rendimiento 3"
+    }
+  ],
+  "organizaciones": [
+    {
+      "codigo": "TCL001",
+      "nombre": "Toyota Chile Central",
+      "sector": "VENTAS",
+      "canal": "DIRECTO"
+    },
+    {
+      "codigo": "TCL002",
+      "nombre": "Toyota Chile Norte",
+      "sector": "POSTVENTA",
+      "canal": "CONCESIONARIO"
+    },
+    {
+      "codigo": "TCL003",
+      "nombre": "Toyota Chile Sur",
+      "sector": "VENTAS",
+      "canal": "DIRECTO"
+    }
+  ]
+}
