@@ -4,7 +4,7 @@ module.exports = defineConfig({
   e2e: {
     // URL base de la aplicación
     // baseUrl: 'http://localhost:8080', // Ajustar según tu configuración local
-    projectId: "f2kkta"
+    projectId: "f2kkta",
     // Configuración de viewport
     viewportWidth: 1280,
     viewportHeight: 720,
